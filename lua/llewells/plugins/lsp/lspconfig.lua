@@ -38,18 +38,6 @@ return {
 					capabilities = capabilities,
 				})
 			end,
-			["cssls"] = function()
-				nvim_lsp["cssls"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
-			["tailwindcss"] = function()
-				nvim_lsp["tailwindcss"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
 			["html"] = function()
 				nvim_lsp["html"].setup({
 					on_attach = on_attach,
@@ -58,18 +46,6 @@ return {
 			end,
 			["jsonls"] = function()
 				nvim_lsp["jsonls"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
-			["eslint"] = function()
-				nvim_lsp["eslint"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
-			["pyright"] = function()
-				nvim_lsp["pyright"].setup({
 					on_attach = on_attach,
 					capabilities = capabilities,
 				})

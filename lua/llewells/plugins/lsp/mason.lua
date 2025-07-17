@@ -10,13 +10,14 @@ return {
 		require("mason-lspconfig").setup({
 			automatic_installation = true,
 			ensure_installed = {
-				"cssls",
-				"eslint",
+			--	"cssls",
+			--	"eslint",
 				"html",
 				"jsonls",
 				"ts_ls",
-				"pyright",
-				"tailwindcss",
+        "ruff",
+			--	"pyright",
+			--	"tailwindcss",
 				"gopls",
 				"golangci_lint_ls",
 			},
@@ -26,10 +27,7 @@ return {
 			ensure_installed = {
 				"prettier",
 				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint",
-				"eslint_d",
+        "ruff", -- python lint, formater, lsp 
 			},
 		})
 	end,
