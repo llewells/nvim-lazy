@@ -8,9 +8,8 @@ return {
 	config = function()
 		local nvim_lsp = require("lspconfig")
 		local mason_lspconfig = require("mason-lspconfig")
-
 		local protocol = require("vim.lsp.protocol")
-
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 		local on_attach = function(client, bufnr)
 			-- format on save
 			if client.server_capabilities.documentFormattingProvider then
@@ -22,9 +21,12 @@ return {
 					end,
 				})
 			end
+			if client.server_capabilities.hoverProvider then
+				if client.name == "ruff" then
+					client.server_capabilities.hoverProvider = false
+				end
+			end
 		end
-
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		mason_lspconfig.setup_handlers({
 			function(server)
@@ -32,14 +34,26 @@ return {
 					capabilities = capabilities,
 				})
 			end,
-			["ruff"] = function()
-				nvim_lsp["ruff"].setup({
+			["pyright"] = function()
+				nvim_lsp["pyright"].setup({
 					on_attach = on_attach,
 					capabilities = capabilities,
+					settings = {
+						pyright = {
+							-- Using Ruff's import organizer
+							disableOrganizeImports = true,
+						},
+						python = {
+							analysis = {
+								-- Ignore all files for analysis to exclusively use Ruff for linting
+								ignore = { "*" },
+							},
+						},
+					},
 				})
 			end,
-			["ts_ls"] = function()
-				nvim_lsp["ts_ls"].setup({
+			["ruff"] = function()
+				nvim_lsp["ruff"].setup({
 					on_attach = on_attach,
 					capabilities = capabilities,
 				})
@@ -52,18 +66,6 @@ return {
 			end,
 			["jsonls"] = function()
 				nvim_lsp["jsonls"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
-			["gopls"] = function()
-				nvim_lsp["gopls"].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-				})
-			end,
-			["golangci_lint_ls"] = function()
-				nvim_lsp["golangci_lint_ls"].setup({
 					on_attach = on_attach,
 					capabilities = capabilities,
 				})
